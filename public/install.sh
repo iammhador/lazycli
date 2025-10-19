@@ -268,7 +268,7 @@ else
   echo -e "${GREEN}Then run 'lazy --help' to get started! 😎${NC}"
 fi
 
-# Display additional tips
+# Additional Information
 echo ""
 echo -e "${BLUE}💡 Tips:${NC}"
 echo "   • Installation directory: $INSTALL_DIR"
