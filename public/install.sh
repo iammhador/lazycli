@@ -7,6 +7,11 @@ detect_windows() {
     return 1  # Unix-like environment on Windows - continue with Unix installer
   fi
   
+  # Check for MSYS2/Git Bash environment (MSYSTEM is set in Git Bash)
+  if [[ -n "$MSYSTEM" ]] && [[ "$MSYSTEM" =~ ^(MINGW|MSYS|CLANG) ]]; then
+    return 1  # Git Bash/MSYS2 environment - continue with Unix installer
+  fi
+  
   # Check if we have a proper SHELL environment (indicates Unix-like environment)
   if [[ -n "$SHELL" ]] && [[ "$SHELL" =~ (bash|zsh|fish|sh)$ ]]; then
     return 1  # Unix-like shell detected
@@ -18,8 +23,11 @@ detect_windows() {
     if command -v powershell.exe >/dev/null 2>&1 && [[ -z "$SHELL" ]]; then
       return 0  # Native Windows detected
     fi
-    # If we have Windows env vars but also a proper shell, likely Git Bash/WSL
-    return 1
+    # If we have Windows env vars but also a proper shell or MSYSTEM, likely Git Bash/WSL
+    if [[ -n "$MSYSTEM" ]] || [[ "$SHELL" =~ (bash|zsh|fish|sh) ]]; then
+      return 1
+    fi
+    return 0  # Native Windows
   fi
   
   return 1  # Default to Unix-like

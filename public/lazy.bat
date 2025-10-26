@@ -28,4 +28,4 @@ if not exist "%LAZYCLI_DIR%\lazy.ps1" (
 )
 
 REM Execute the PowerShell script with all arguments
-powershell.exe -ExecutionPolicy Bypass -File "%LAZYCLI_DIR%\lazy.ps1" %*
+powershell.exe -ExecutionPolicy Bypass -File "\"%LAZYCLI_DIR%\lazy.ps1\"" %*

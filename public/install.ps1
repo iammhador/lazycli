@@ -3,6 +3,7 @@ Write-Host "🛠️ Installing LazyCLI for Windows..." -ForegroundColor Cyan
 
 # Set installation directory
 $InstallDir = "$env:USERPROFILE\.lazycli"
+$LazyScript = "$InstallDir\lazy.sh"
 $LazyBinary = "$InstallDir\lazy.ps1"
 $LazyBat = "$InstallDir\lazy.bat"
 
@@ -21,7 +22,7 @@ try {
 # Download the latest CLI script
 try {
     Write-Host "⬇️ Downloading LazyCLI script..." -ForegroundColor Yellow
-    Invoke-WebRequest -Uri "https://lazycli.xyz/scripts/lazy.sh" -OutFile $LazyBinary -UseBasicParsing
+    Invoke-WebRequest -Uri "https://lazycli.xyz/scripts/lazy.sh" -OutFile $LazyScript -UseBasicParsing
     Write-Host "✅ Downloaded LazyCLI script" -ForegroundColor Green
 } catch {
     Write-Host "❌ Failed to download LazyCLI script" -ForegroundColor Red
@@ -32,7 +33,7 @@ try {
 # Create a batch wrapper for Command Prompt compatibility
 $BatchContent = @"
 @echo off
-powershell.exe -ExecutionPolicy Bypass -File "%~dp0lazy.ps1" %*
+powershell.exe -ExecutionPolicy Bypass -File "\"%~dp0lazy.ps1\"" %*
 "@
 
 try {
@@ -61,9 +62,11 @@ param([Parameter(ValueFromRemainingArguments=`$true)][string[]]`$Arguments)
 
 if (`$GitBashPath) {
     # Use Git Bash to execute the script
-    `$LazyScript = "`$PSScriptRoot\lazy.ps1" -replace '\\', '/'
-    `$LazyScript = `$LazyScript -replace '^([A-Z]):', '/`$1'.ToLower()
-    & `$GitBashPath -c "`$LazyScript `$(`$Arguments -join ' ')"
+    `$LazyScript = "`$PSScriptRoot\lazy.sh"
+    `$LazyScriptUnix = `$LazyScript -replace '\\', '/'
+    `$LazyScriptUnix = `$LazyScriptUnix -replace '^([A-Z]):', '/`$1'.ToLower()
+    `$LazyScriptUnix = `$LazyScriptUnix -replace ' ', '\ '
+    & `$GitBashPath -c "`"`$LazyScriptUnix`" `$(`$Arguments -join ' ')"')"
 } else {
     # Fallback: Basic PowerShell implementation
     Write-Host "⚠️ Git Bash not found. Limited functionality available." -ForegroundColor Yellow
@@ -122,16 +125,10 @@ if ($CurrentPath -notlike "*$InstallDir*") {
 }
 
 # Final verification
-if (Get-Command "lazy" -ErrorAction SilentlyContinue) {
-    Write-Host ""
-    Write-Host "✅ LazyCLI installed successfully! 🎉" -ForegroundColor Green
-    Write-Host "🚀 Run 'lazy --help' to get started" -ForegroundColor Cyan
-} else {
-    Write-Host ""
-    Write-Host "✅ LazyCLI installed!" -ForegroundColor Green
-    Write-Host "🔄 Please restart your terminal or PowerShell session" -ForegroundColor Yellow
-    Write-Host "🚀 Then run 'lazy --help' to get started" -ForegroundColor Cyan
-}
+Write-Host ""
+Write-Host "✅ LazyCLI installed successfully! 🎉" -ForegroundColor Green
+Write-Host "🔄 Please restart your terminal or open a new one" -ForegroundColor Yellow
+Write-Host "🚀 Then run 'lazy --help' to get started" -ForegroundColor Cyan
 
 Write-Host ""
 Write-Host "💡 For best experience, install Git for Windows:" -ForegroundColor Blue
