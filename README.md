@@ -1,6 +1,3 @@
-Got it! Here's a cleaned-up version of your README with all instances of `create` changed to `init` where appropriate, so it aligns with your CLI commands (`lazy next-js init`, `lazy vite-js init`, etc.):
-
-````markdown
 <div align="center">
   <img src="./public/logo.png" alt="LazyCLI Logo" width="120" height="120">
   

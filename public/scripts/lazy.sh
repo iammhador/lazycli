@@ -317,6 +317,8 @@ github_create_pr() {
 # Supports: zod, bcrypt, js-cookie, swr, lucide-react, react-hot-toast, shadcn-ui
 next_js_create() {
   echo "🛠️ Creating Next.js app..."
+  echo "ℹ️  Note: For yes/no prompts, use 1=Yes and 0=No"
+  echo
 
   # ========== STEP 1: COLLECT ALL USER PREFERENCES ==========
   
@@ -468,6 +470,8 @@ next_js_create() {
 # Vite.js App Creator 
 vite_js_create() {
   echo "🛠️ Creating Vite app for you..."
+  echo "ℹ️  Note: For yes/no prompts, use 1=Yes and 0=No"
+  echo
 
   # --- Project name ---
   read -p "📦 Enter project name (no spaces): " project_name
@@ -478,17 +482,17 @@ vite_js_create() {
 
   # --- Framework selection ---
   echo "✨ Choose a framework:"
-  echo "1) Vanilla"
-  echo "2) React"
-  echo "3) Vue"
-  echo "4) Svelte"
-  read -p "🔧 Enter choice [1-4]: " choice
+  echo "i) Vanilla"
+  echo "ii) React"
+  echo "iii) Vue"
+  echo "iv) Svelte"
+  read -p "🔧 Enter choice [i-iv]: " choice
 
   case $choice in
-    1) framework="vanilla" ;;
-    2) framework="react" ;;
-    3) framework="vue" ;;
-    4) framework="svelte" ;;
+    i) framework="vanilla" ;;
+    ii) framework="react" ;;
+    iii) framework="vue" ;;
+    iv) framework="svelte" ;;
     *) echo "❌ Invalid choice."; return 1 ;;
   esac
 
@@ -681,8 +685,10 @@ EOF
 
 node_js_init() {
   echo "🛠️ Initializing Node.js project..."
+  echo "ℹ️  Note: For yes/no prompts, use 1=Yes and 0=No"
+  echo
 
-  read -p "🤔 Choose setup: 1) Basic JS  2) TypeScript [1/2]: " setup
+  read -p "🤔 Choose setup: i) Basic JS  ii) TypeScript [i/ii]: " setup
   detect_package_manager
   pkg_manager="$PKG_MANAGER"
 
@@ -693,13 +699,13 @@ node_js_init() {
   dev_deps=()
   deps=()
 
-  read -p "➕ Install dotenv? [y/N]: " use_dotenv
-  [[ "$use_dotenv" =~ ^[Yy]$ ]] && deps+=("dotenv")
+  read -p "➕ Install dotenv? [1/0]: " use_dotenv
+  [[ "$use_dotenv" == "1" ]] && deps+=("dotenv")
 
-  read -p "🌀 Use nodemon for auto-reload? [y/N]: " use_nodemon
-  [[ "$use_nodemon" =~ ^[Yy]$ ]] && dev_deps+=("nodemon")
+  read -p "🌀 Use nodemon for auto-reload? [1/0]: " use_nodemon
+  [[ "$use_nodemon" == "1" ]] && dev_deps+=("nodemon")
 
-  if [[ "$setup" == "2" ]]; then
+  if [[ "$setup" == "ii" ]]; then
     echo "🧩 Setting up TypeScript environment..."
     dev_deps+=("typescript" "@types/node" "ts-node")
     mkdir -p src
@@ -748,11 +754,11 @@ EOF
   # Update package.json scripts
   echo "🧠 Configuring package.json scripts..."
   jq --arg start "$start_cmd" \
-     --arg dev "$([[ "$use_nodemon" =~ ^[Yy]$ ]] && echo "nodemon src/index" || echo "$dev_cmd")" \
+     --arg dev "$([[ "$use_nodemon" == "1" ]] && echo "nodemon src/index" || echo "$dev_cmd")" \
      '.scripts = {start: $start, dev: $dev, build: "tsc"}' package.json > package.tmp.json && mv package.tmp.json package.json
 
   # Optional .env
-  if [[ "$use_dotenv" =~ ^[Yy]$ ]]; then
+  if [[ "$use_dotenv" == "1" ]]; then
     echo "🔐 Creating .env file..."
     cat > .env <<EOF
 NODE_ENV=development
@@ -884,17 +890,17 @@ vite_js_create() {
   fi
 
   echo "⚙️ Choose framework template"
-  echo "  1) react"
-  echo "  2) react-ts"
-  echo "  3) vanilla"
-  echo "  4) vanilla-ts"
-  read -p "Select [1-4] (default 2): " choice; choice=${choice:-2}
+  echo "  i) react"
+  echo "  ii) react-ts"
+  echo "  iii) vanilla"
+  echo "  iv) vanilla-ts"
+  read -p "Select [i-iv] (default ii): " choice; choice=${choice:-ii}
   local template="react-ts"
   case "$choice" in
-    1) template="react" ;;
-    2) template="react-ts" ;;
-    3) template="vanilla" ;;
-    4) template="vanilla-ts" ;;
+    i) template="react" ;;
+    ii) template="react-ts" ;;
+    iii) template="vanilla" ;;
+    iv) template="vanilla-ts" ;;
     *) template="react-ts" ;;
   esac
 
@@ -914,6 +920,9 @@ vite_js_create() {
 
 # React Native project scaffolding (Expo or CLI)
 react_native_create() {
+  echo "ℹ️  Note: For yes/no prompts, use 1=Yes and 0=No"
+  echo
+  
   local project_name="$1"
   if [[ -z "$project_name" ]]; then
     read -p "📦 Enter React Native project name: " project_name
@@ -921,11 +930,11 @@ react_native_create() {
   fi
 
   echo "⚙️ Choose setup method"
-  echo "  1) Expo (recommended)"
-  echo "  2) React Native CLI"
-  read -p "Select [1-2] (default 1): " setup; setup=${setup:-1}
+  echo "  i) Expo (recommended)"
+  echo "  ii) React Native CLI"
+  read -p "Select [i-ii] (default i): " setup; setup=${setup:-i}
 
-  if [[ "$setup" == "2" ]]; then
+  if [[ "$setup" == "ii" ]]; then
     echo "🚀 Creating React Native CLI app..."
     npx react-native init "$project_name" || { echo "❌ React Native CLI setup failed."; return 1; }
     echo "✅ CLI app created. Use 'npx react-native run-android' or 'run-ios'"
@@ -939,18 +948,18 @@ react_native_create() {
 # Interactive top-level init selector
 lazy_init() {
   echo "🧰 Select a project to initialize:"
-  echo "  1) Node.js (TypeScript or simple)"
-  echo "  2) Next.js"
-  echo "  3) Vite"
-  echo "  4) Django"
-  echo "  5) React Native"
-  read -p "Choose [1-5]: " choice
+  echo "  i) Node.js (TypeScript or simple)"
+  echo "  ii) Next.js"
+  echo "  iii) Vite"
+  echo "  iv) Django"
+  echo "  v) React Native"
+  read -p "Choose [i-v]: " choice
   case "$choice" in
-    1) node_js_init ;;
-    2) next_js_create ;;
-    3) vite_js_create ;;
-    4) read -p "Project name: " pname; [[ -n "$pname" ]] && djangoInit "$pname" || echo "❌ Project name required" ;;
-    5) react_native_create ;;
+    i) node_js_init ;;
+    ii) next_js_create ;;
+    iii) vite_js_create ;;
+    iv) read -p "Project name: " pname; [[ -n "$pname" ]] && djangoInit "$pname" || echo "❌ Project name required" ;;
+    v) react_native_create ;;
     *) echo "❌ Invalid choice"; show_help ;;
   esac
 }
