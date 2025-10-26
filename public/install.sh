@@ -78,11 +78,15 @@ detect_shell_profile() {
   local profile_files=()
   
   # Get current shell (remove path, keep only shell name)
-  # In Git Bash, SHELL might be set to powershell, so check for Git Bash environment
-  if [[ -n "$MSYSTEM" ]]; then
-    current_shell="bash"  # Force bash for Git Bash environment
+  # In Git Bash/MSYS2, SHELL might be incorrectly set, so check for Git Bash environment
+  if [[ -n "$MSYSTEM" && "$MSYSTEM" =~ ^MINGW ]]; then
+    current_shell="bash"  # Force bash for Git Bash/MSYS2 environment
   else
     current_shell=$(basename "$SHELL" 2>/dev/null || echo "bash")
+    # Additional check: if shell name contains "powershell" but we're in MSYS2, use bash
+    if [[ "$current_shell" == "powershell" && -n "$MSYSTEM" ]]; then
+      current_shell="bash"
+    fi
   fi
   
   case "$current_shell" in

@@ -318,6 +318,8 @@ github_create_pr() {
 next_js_create() {
   echo "🛠️ Creating Next.js app..."
 
+  # ========== STEP 1: COLLECT ALL USER PREFERENCES ==========
+  
   # Ask for project name
   read -p "📦 Enter project name (no spaces): " project_name
   if [[ -z "$project_name" ]]; then
@@ -375,7 +377,8 @@ next_js_create() {
     done
   }
 
-  # Optional packages
+  # Collect all package preferences BEFORE creating project
+  echo "📋 Collecting package preferences..."
   for pkg in \
     "zod:➕ Install zod?" \
     "bcrypt:🔐 Install bcrypt?" \
@@ -391,9 +394,11 @@ next_js_create() {
     eval "ans_${key//-/_}=$answer"
   done
 
+  # ========== STEP 2: CREATE PROJECT ==========
+  
   # Construct Next.js CLI command
   echo ""
-  echo "🚀 Creating Next.js project..."
+  echo "🚀 Creating Next.js project with collected preferences..."
 
   cmd="npx create-next-app@latest \"$project_name\" --yes"
   [[ "$use_ts" == "1" ]] && cmd+=" --typescript" || cmd+=" --no-typescript"
@@ -406,6 +411,11 @@ next_js_create() {
 
   eval "$cmd" || { echo "❌ Failed to create project."; return 1; }
 
+  echo "✅ Next.js app created at ./$project_name"
+  echo ""
+
+  # ========== STEP 3: INSTALL ADDITIONAL PACKAGES ==========
+  
   cd "$project_name" || return 1
 
   # Detect package manager (fallback npm)
