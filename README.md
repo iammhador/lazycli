@@ -1,4 +1,3 @@
-````markdown
 <div align="center">
   <img src="./public/logo.png" alt="LazyCLI Logo" width="120" height="120">
   
