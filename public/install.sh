@@ -2,22 +2,27 @@
 
 # Detect Windows and redirect to PowerShell installer
 detect_windows() {
-  # Check for Windows-specific environment variables and paths
+  # First, check if running in Unix-like environment on Windows (Git Bash, Cygwin, WSL)
+  if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]] || [[ -n "$WSL_DISTRO_NAME" ]]; then
+    return 1  # Unix-like environment on Windows - continue with Unix installer
+  fi
+  
+  # Check if we have a proper SHELL environment (indicates Unix-like environment)
+  if [[ -n "$SHELL" ]] && [[ "$SHELL" =~ (bash|zsh|fish|sh)$ ]]; then
+    return 1  # Unix-like shell detected
+  fi
+  
+  # Check for native Windows PowerShell/CMD environment
   if [[ -n "$WINDIR" ]] || [[ -n "$SYSTEMROOT" ]] || [[ "$OS" == "Windows_NT" ]]; then
-    return 0  # Windows detected
+    # Additional check: if powershell.exe is available but no proper SHELL, likely native Windows
+    if command -v powershell.exe >/dev/null 2>&1 && [[ -z "$SHELL" ]]; then
+      return 0  # Native Windows detected
+    fi
+    # If we have Windows env vars but also a proper shell, likely Git Bash/WSL
+    return 1
   fi
   
-  # Check if running in native Windows PowerShell/CMD
-  if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]]; then
-    return 1  # Unix-like environment on Windows (Git Bash, Cygwin)
-  fi
-  
-  # Additional Windows detection
-  if command -v powershell.exe >/dev/null 2>&1 && [[ -z "$SHELL" ]]; then
-    return 0  # Likely native Windows
-  fi
-  
-  return 1  # Not Windows
+  return 1  # Default to Unix-like
 }
 
 # Check if running on native Windows
