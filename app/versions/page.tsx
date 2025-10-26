@@ -146,7 +146,7 @@ function VersionContent() {
 
   const versions = [
     {
-      version: "v1.0.2",
+      version: "v1.0.4",
       title: "Enhanced Development Workflow",
       date: "2024-01-15",
       status: "current",
@@ -204,8 +204,8 @@ function VersionContent() {
         'lazy github push "commit message"',
         'lazy github pr main "feature description"',
         "lazy node-js init",
-        "lazy next-js create",
-        "lazy vite-js create",
+        "lazy next-js init",
+        "lazy vite-js init",
       ],
     },
     {
@@ -256,8 +256,8 @@ function VersionContent() {
         'lazy github push "message"',
         'lazy github pr <base> "message"',
         "lazy node-js init",
-        "lazy next-js create",
-        "lazy vite-js create",
+        "lazy next-js init",
+        "lazy vite-js init",
       ],
     },
   ];
@@ -337,7 +337,7 @@ function VersionContent() {
   const stats = [
     {
       label: "Total Commands",
-      value: "45+",
+      value: "10+",
       icon: <Command className="w-6 h-6" />,
     },
     {
@@ -348,7 +348,7 @@ function VersionContent() {
     { label: "Platforms", value: "3", icon: <Globe className="w-6 h-6" /> },
     {
       label: "Active Users",
-      value: "1.2K+",
+      value: "250+",
       icon: <Users className="w-6 h-6" />,
     },
   ];

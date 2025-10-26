@@ -1,5 +1,13 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Github, Settings, Zap, Terminal, Smartphone } from "lucide-react";
+import {
+  ArrowRight,
+  Github,
+  Settings,
+  Zap,
+  Terminal,
+  Smartphone,
+  Snowflake,
+} from "lucide-react";
 
 interface Command {
   command: string;
@@ -35,26 +43,26 @@ export default function CurrentFeatures({
       color: "from-purple-500 via-pink-500 to-red-500",
       commands: [
         {
-          command: "lazycli github init",
+          command: "lazy github init",
           description:
             "Initialize a new GitHub repository with standard configuration",
         },
         {
-          command: "lazycli github clone",
-          description: "Clone a GitHub repository and setup the project",
+          command: "lazy github clone",
+          description: "Clone a GitHub repository and set up the project",
         },
         {
-          command: "lazycli github push",
+          command: "lazy github push",
           description: "Push changes to GitHub with automated commit messages",
         },
         {
-          command: "lazycli github pull",
+          command: "lazy github pull",
           description: "Create pull requests with predefined templates",
         },
       ],
     },
     {
-      id: "nodejs",
+      id: "node-js",
       title: "Node.js Project Setup",
       description:
         "Bootstrap Node.js projects with best practices, TypeScript, and modern configurations",
@@ -62,23 +70,14 @@ export default function CurrentFeatures({
       color: "from-green-400 via-emerald-500 to-teal-500",
       commands: [
         {
-          command: "lazycli node-js init",
+          command: "lazy node-js init",
           description:
-            "Create a new Node.js project with package.json and basic structure",
-        },
-        {
-          command: "lazycli node-js deps",
-          description: "Install common dependencies and dev tools",
-        },
-        {
-          command: "lazycli node-js scripts",
-          description:
-            "Add standard npm scripts for development and production",
+            "Initialize a new Node.js project with package.json and basic structure",
         },
       ],
     },
     {
-      id: "nextjs",
+      id: "next-js",
       title: "Next.js Scaffolding",
       description:
         "Generate optimized Next.js applications with TypeScript, Tailwind, and modern tooling",
@@ -86,22 +85,14 @@ export default function CurrentFeatures({
       color: "from-blue-400 via-cyan-500 to-teal-500",
       commands: [
         {
-          command: "lazycli next-js i",
+          command: "lazy next-js init",
           description:
             "Initialize a new Next.js project with TypeScript and Tailwind CSS",
-        },
-        {
-          command: "lazycli next-js api",
-          description: "Generate API routes with authentication boilerplate",
-        },
-        {
-          command: "lazycli next-js deploy",
-          description: "Configure deployment settings for Vercel",
         },
       ],
     },
     {
-      id: "vitejs",
+      id: "vite-js",
       title: "Vite.js Project Setup",
       description:
         "Create lightning-fast Vite.js projects with modern tooling and optimized builds",
@@ -109,21 +100,14 @@ export default function CurrentFeatures({
       color: "from-orange-400 via-red-500 to-pink-500",
       commands: [
         {
-          command: "lazycli vite init",
-          description: "Bootstrap a new Vite project with React or Vue",
-        },
-        {
-          command: "lazycli vite config",
-          description: "Configure build optimization and environment variables",
-        },
-        {
-          command: "lazycli vite preview",
-          description: "Set up local preview server with hot reload",
+          command: "lazy vite-js init",
+          description:
+            "Bootstrap a new Vite project with React, Vue, or Vanilla JS",
         },
       ],
     },
     {
-      id: "reactnative",
+      id: "react-native",
       title: "React Native Development",
       description:
         "Build cross-platform mobile apps with React Native, Expo, and native navigation",
@@ -131,12 +115,13 @@ export default function CurrentFeatures({
       color: "from-indigo-400 via-purple-500 to-pink-500",
       commands: [
         {
-          command: "lazy react-native create",
-          description: "Create React Native app with Expo or CLI setup",
+          command: "lazy react-native init",
+          description: "Initialize React Native app with Expo or CLI setup",
         },
         {
-          command: "lazy react-native init",
-          description: "Initialize project with navigation and state management",
+          command: "lazy react-native deps",
+          description:
+            "Install essential packages and configure state management",
         },
         {
           command: "lazy react-native deploy",
@@ -144,7 +129,23 @@ export default function CurrentFeatures({
         },
       ],
     },
+    {
+      id: "django",
+      title: "Django Project Setup",
+      description:
+        "Initialize Python Django projects with virtual environment, project scaffolding, and standard directories",
+      icon: Snowflake,
+      color: "from-blue-600 via-blue-500 to-cyan-500",
+      commands: [
+        {
+          command: "lazy django init <project_name>",
+          description:
+            "Create a new Django project with static, templates, media directories, and auto-configured settings",
+        },
+      ],
+    },
   ];
+
   return (
     <>
       <section id="features" className="py-20">
@@ -172,7 +173,7 @@ export default function CurrentFeatures({
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
             {currentFeatures.map((feature) => {
               const IconComponent = feature.icon;
@@ -205,11 +206,12 @@ export default function CurrentFeatures({
                       whileTap={{ scale: 0.95 }}
                       onClick={() => {
                         setActiveCommand(feature.id);
-                        const commandsSection = document.getElementById('commands');
+                        const commandsSection =
+                          document.getElementById("commands");
                         if (commandsSection) {
-                          commandsSection.scrollIntoView({ 
-                            behavior: 'smooth',
-                            block: 'start'
+                          commandsSection.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
                           });
                         }
                       }}

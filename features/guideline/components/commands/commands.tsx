@@ -1,32 +1,58 @@
 import { motion } from "framer-motion";
-import { Github, Zap, Code2, Rocket } from "lucide-react";
+import {
+  Github,
+  Zap,
+  Code2,
+  Rocket,
+  Smartphone,
+  Snowflake,
+} from "lucide-react";
 export default function Commands() {
   const supportedCommands = [
     {
       icon: Github,
       command: "github",
-      description: "Complete GitHub workflow automation with repository management",
-      example: "lazy github pr main \"Add new feature\"",
+      description:
+        "Complete GitHub workflow automation with repository management",
+      example: 'lazy github pr main "Add new feature"',
     },
     {
       icon: Code2,
       command: "node-js",
-      description: "Initialize Node.js projects with TypeScript and interactive package selection",
+      description:
+        "Initialize Node.js projects with TypeScript and interactive package selection",
       example: "lazy node-js init",
     },
     {
       icon: Rocket,
       command: "next-js",
-      description: "Create Next.js applications with TypeScript, Tailwind, and modern tooling",
-      example: "lazy next-js create",
+      description:
+        "Initialize Next.js applications with TypeScript, Tailwind, and modern tooling",
+      example: "lazy next-js init",
     },
     {
       icon: Zap,
       command: "vite-js",
-      description: "Bootstrap Vite projects with framework selection and Tailwind/DaisyUI integration",
-      example: "lazy vite-js create",
+      description:
+        "Bootstrap Vite projects with framework selection and Tailwind/DaisyUI integration",
+      example: "lazy vite-js init",
+    },
+    {
+      icon: Smartphone,
+      command: "react-native",
+      description:
+        "Initialize cross-platform React Native mobile apps with Expo or CLI",
+      example: "lazy react-native init",
+    },
+    {
+      icon: Snowflake,
+      command: "django",
+      description:
+        "Initialize Django projects with pre-configured structure for static, templates, and media",
+      example: "lazy django init myproject",
     },
   ];
+
   return (
     <>
       {" "}

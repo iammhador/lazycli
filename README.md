@@ -1,3 +1,6 @@
+Got it! Here's a cleaned-up version of your README with all instances of `create` changed to `init` where appropriate, so it aligns with your CLI commands (`lazy next-js init`, `lazy vite-js init`, etc.):
+
+````markdown
 <div align="center">
   <img src="./public/logo.png" alt="LazyCLI Logo" width="120" height="120">
   
@@ -25,6 +28,7 @@ curl -s https://lazycli.xyz/install.sh | bash
 # Custom version installation
 curl -s https://lazycli.xyz/install.sh | bash -s version_name
 ```
+````
 
 > 💡 **Windows users:** Requires WSL or Git Bash — [See installation guide →](https://lazycli.xyz/windows)
 
@@ -44,80 +48,32 @@ curl -s https://lazycli.xyz/install.sh | bash -s version_name
 
 - **`lazy node-js init`** - Initialize Node.js + TypeScript project
 - **`lazy node-js structure`** - Create comprehensive Node.js project structure with templates
-  - **6 Project Templates Available:**
-    1. **Basic API** - Express + TypeScript + Essential middleware
-    2. **Full-stack API** - Express + TypeScript + Database integration
-    3. **Microservice** - Express + TypeScript + Docker setup
-    4. **CLI Tool** - TypeScript + Commander.js framework
-    5. **Library** - TypeScript + Rollup bundling
-    6. **Custom** - Manual structure selection
-  - **Complete Project Structure:**
-    ```
-    src/
-    ├── controllers/     # Route controllers
-    ├── models/         # Data models
-    ├── routes/         # Route definitions
-    ├── middleware/     # Custom middleware
-    ├── services/       # Business logic
-    ├── utils/          # Utility functions
-    ├── config/         # Configuration files
-    └── index.ts        # Main server entry
-    tests/
-    ├── unit/           # Unit tests
-    └── integration/    # Integration tests
-    docs/               # Documentation
-    scripts/            # Build/deployment scripts
-    ```
-  - **Built-in Features:**
-    - ✅ Auto-detects package manager (bun > pnpm > yarn > npm)
-    - ✅ Complete TypeScript setup with all necessary type definitions
-    - ✅ Ready-to-run server with hot reloading (nodemon)
-    - ✅ Express.js with essential middleware (cors, helmet, morgan)
-    - ✅ Environment variables (.env) configuration
-    - ✅ Error handling middleware
-    - ✅ Health check endpoint
-    - ✅ Git ignore and TypeScript config
-    - ✅ NPM scripts: dev, build, start, test, lint
-    - ✅ All dependencies installed automatically
 
 ### 🐍 Django Development
 
-- **`curl -s https://lazycli.xyz/mahamudh472/lazy.sh | bash -s django_init <project_name>`** - Complete Django project initialization
-  - **Smart Virtual Environment Management:**
-    - ✅ Auto-detects existing virtual environments
-    - ✅ Creates new venv only when needed (virtualenv or python3 -m venv)
-    - ✅ Activates environment automatically
-  - **Complete Project Setup:**
-    - ✅ Django installation and project creation
-    - ✅ Pre-configured project structure with essential directories
-    - ✅ Static files directory (`static/`)
-    - ✅ Templates directory (`templates/`)
-    - ✅ Media files directory (`media/`)
-  - **Auto-configured Settings:**
-    - ✅ Static files configuration
-    - ✅ Templates directory setup
-    - ✅ Media files handling
-    - ✅ Ready-to-run Django project
+- **`lazy django init <project_name>`** - Complete Django project initialization
 
-**Contributed by:** [mahamudh472](https://github.com/mahamudh472)
+  - **Smart Virtual Environment Management**
+  - **Pre-configured project structure**: `static/`, `templates/`, `media/`
+  - **Auto-configured settings**: static, templates, media
 
 ### ⚛️ Next.js Scaffolding
 
-- **`lazy next-js create`** - Create Next.js app with modern defaults
+- **`lazy next-js init`** - Scaffold a new Next.js app with modern defaults
 - TypeScript, Tailwind CSS, and ESLint pre-configured
 - Optional packages: Zod, bcrypt, js-cookie, SWR, Lucide React, react-hot-toast
 - shadcn/ui integration support
 
 ### ⚡ Vite.js Projects
 
-- **`lazy vite-js create`** - Multi-framework Vite project creation
+- **`lazy vite-js init`** - Multi-framework Vite project initialization
 - Supports: Vanilla JS, React, Vue, Svelte
 - Optional packages: axios, clsx, zod, react-hot-toast, react-router-dom, lucide-react
 - Modern Tailwind CSS integration with DaisyUI support
 
 ### 📱 React Native Development
 
-- **`lazy react-native create`** - Cross-platform mobile app creation
+- **`lazy react-native init`** - Cross-platform mobile app initialization
 - Supports: Expo (beginner-friendly) and React Native CLI (advanced)
 - Navigation: React Navigation with stack and tab navigation
 - State management: Redux Toolkit, Zustand options
@@ -136,8 +92,6 @@ curl -s https://lazycli.xyz/install.sh | bash -s version_name
 
 ## 🔮 Upcoming Features
 
-These features are planned for future updates:
-
 - Python project bootstrapping
 - Docker containerization support
 - Deployment via PM2 and SSH
@@ -154,36 +108,21 @@ Run commands globally from anywhere in your terminal:
 ### GitHub Workflow
 
 ```bash
-# Initialize new repository
 lazy github init
-
-# Clone and setup project
 lazy github clone https://github.com/iammhador/repo.git
-
-# Quick commit and push
 lazy github push "Add new feature"
-
-# Create pull request with full workflow
 lazy github pr main "Implement user authentication"
 ```
 
-### Project Creation
+### Project Creation / Initialization
 
 ```bash
-# Node.js with TypeScript
 lazy node-js init
-
-# Node.js with comprehensive structure (6 templates)
 lazy node-js structure
-
-# Next.js with modern stack
-lazy next-js create
-
-# Vite + React with Tailwind
-lazy vite-js create
-
-# React Native mobile app
-lazy react-native create
+lazy next-js init
+lazy vite-js init
+lazy react-native init
+lazy django init myproject
 ```
 
 ---
@@ -200,54 +139,28 @@ lazy react-native create
 
 ## 🤝 Contributing
 
-We welcome contributions! LazyCLI is an open-source project built for the developer community.
-
-### Quick Start
+We welcome contributions! LazyCLI is open-source.
 
 ```bash
-git clone https://github.com/iammhador//lazycli
+git clone https://github.com/iammhador/lazycli
 cd lazycli
 ```
 
-### Contribution Guidelines
-
 - 📝 Follow existing code style and patterns
 - 🧪 Test your changes thoroughly
-- 📚 Update documentation for new features
+- 📚 Update documentation
 - 🔍 Ensure cross-platform compatibility
 
-For detailed guidelines, visit [lazycli.xyz/contribute](https://lazycli.xyz/contribute)
-
----
-
-## 🔮 Roadmap
-
-### Coming Soon
-
-- 🐍 Python project scaffolding
-- 🐳 Docker containerization support
-- 🚀 Deployment automation (PM2, SSH)
-- 📱 Flutter mobile development support
-- 🦀 Rust & Go project templates
-- 🔐 Environment & secret management
-- 🌐 Multi-language support
-
-### Future Versions
-
-- Plugin system for custom commands
-- GUI companion app
-- Cloud integration (AWS, Vercel, Netlify)
-- Team collaboration features
+More: [lazycli.xyz/contribute](https://lazycli.xyz/contribute)
 
 ---
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE).
+[MIT License](LICENSE)
 
 ---
 
 ## 🙌 Credits
 
 Built and maintained by [iammhador](https://iammhador.xyz).
-Inspired by the simplicity of automation.

@@ -8,6 +8,7 @@ import {
   CheckCircle,
   Copy,
   Smartphone,
+  Snowflake,
 } from "lucide-react";
 
 interface Command {
@@ -47,29 +48,28 @@ export default function InteractiveCommands({
       commands: [
         {
           command: "lazy github init",
-          description:
-            "Initialize a new Git repository in the current directory",
+          description: "Initialize a new Git repository",
         },
         {
           command: "lazy github clone <repo-url>",
-          description: "Clone a GitHub repository and auto-detect tech stack for setup",
+          description: "Clone a repo and auto-setup tech stack",
         },
         {
-          command: "lazy github push \"<commit-message>\"",
-          description: "Stage all changes, commit with message, and push to current branch",
+          command: 'lazy github push "<commit-message>"',
+          description: "Stage, commit, and push changes",
         },
         {
-          command: "lazy github pull <base-branch> \"<pr-title>\"",
-          description: "Create a simple pull request from current branch to specified base branch",
+          command: 'lazy github pull <base-branch> "<pr-title>"',
+          description: "Create a simple pull request",
         },
         {
-          command: "lazy github pr <base-branch> \"<commit-message>\"",
-          description: "Pull latest changes, install dependencies, commit, push, and create PR",
+          command: 'lazy github pr <base-branch> "<commit-message>"',
+          description: "Full PR workflow",
         },
       ],
     },
     {
-      id: "nodejs",
+      id: "node-js",
       title: "Node.js Project Setup",
       description:
         "Bootstrap Node.js projects with TypeScript, Express, and interactive package selection",
@@ -79,54 +79,72 @@ export default function InteractiveCommands({
         {
           command: "lazy node-js init",
           description:
-            "Initialize Node.js project with TypeScript and interactive package selection (Express, dotenv, nodemon, cors, zod)",
+            "Initialize Node.js project with TypeScript and optional packages",
         },
       ],
     },
     {
-      id: "nextjs",
+      id: "next-js",
       title: "Next.js Scaffolding",
       description:
-        "Generate optimized Next.js applications with TypeScript, Tailwind, and interactive package selection",
+        "Generate optimized Next.js applications with TypeScript, Tailwind, and optional packages",
       icon: Zap,
       color: "from-blue-400 via-cyan-500 to-teal-500",
       commands: [
         {
-          command: "lazy next-js create",
+          command: "lazy next-js init",
           description:
-            "Create Next.js app with TypeScript, Tailwind, ESLint defaults and optional packages (zod, bcrypt, js-cookie, swr, lucide-react, react-hot-toast, shadcn-ui)",
+            "Initialize Next.js app with TypeScript, Tailwind, ESLint, and optional packages",
         },
       ],
     },
     {
-      id: "vitejs",
+      id: "vite-js",
       title: "Vite.js Project Setup",
       description:
-        "Create lightning-fast Vite.js projects with framework selection and modern Tailwind/DaisyUI integration",
+        "Create lightning-fast Vite.js projects with framework selection and Tailwind/DaisyUI integration",
       icon: Terminal,
       color: "from-orange-400 via-red-500 to-pink-500",
       commands: [
         {
-          command: "lazy vite-js create",
-          description: "Create Vite project with framework selection (React/Vue/Svelte/Vanilla) and optional Tailwind CSS + DaisyUI setup",
+          command: "lazy vite-js init",
+          description:
+            "Initialize Vite project with framework selection and optional Tailwind/DaisyUI",
         },
       ],
     },
     {
-      id: "reactnative",
+      id: "react-native",
       title: "React Native Development",
       description:
-        "Build cross-platform mobile apps with React Native, Expo setup, and essential packages for navigation and state management",
+        "Build cross-platform mobile apps with React Native, Expo/CLI setup, navigation, state management, and UI libraries",
       icon: Smartphone,
       color: "from-indigo-400 via-purple-500 to-pink-500",
       commands: [
         {
-          command: "lazy react-native create",
-          description: "Create React Native app with Expo or CLI setup, including navigation, state management, and UI libraries (React Navigation, Redux/Zustand, NativeWind, Async Storage)",
+          command: "lazy react-native init",
+          description:
+            "Initialize React Native app with Expo or CLI, including navigation, state management, and UI libraries",
+        },
+      ],
+    },
+    {
+      id: "django",
+      title: "Django Development",
+      description:
+        "Initialize Django projects with pre-configured structure for static, templates, and media directories",
+      icon: Snowflake,
+      color: "from-green-500 via-lime-500 to-emerald-500",
+      commands: [
+        {
+          command: "lazy django init <project_name>",
+          description:
+            "Create Django project with static, templates, and media setup",
         },
       ],
     },
   ];
+
   return (
     <>
       <section id="commands" className="py-20">
