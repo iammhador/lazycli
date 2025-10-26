@@ -1,4 +1,43 @@
 #!/bin/bash
+
+# Detect Windows and redirect to PowerShell installer
+detect_windows() {
+  # Check for Windows-specific environment variables and paths
+  if [[ -n "$WINDIR" ]] || [[ -n "$SYSTEMROOT" ]] || [[ "$OS" == "Windows_NT" ]]; then
+    return 0  # Windows detected
+  fi
+  
+  # Check if running in native Windows PowerShell/CMD
+  if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]]; then
+    return 1  # Unix-like environment on Windows (Git Bash, Cygwin)
+  fi
+  
+  # Additional Windows detection
+  if command -v powershell.exe >/dev/null 2>&1 && [[ -z "$SHELL" ]]; then
+    return 0  # Likely native Windows
+  fi
+  
+  return 1  # Not Windows
+}
+
+# Check if running on native Windows
+if detect_windows; then
+  echo "🪟 Windows detected! Redirecting to PowerShell installer..."
+  echo ""
+  echo "Please run this command in PowerShell instead:"
+  echo "  iwr -useb https://lazycli.xyz/install.ps1 | iex"
+  echo ""
+  echo "Or download and run manually:"
+  echo "  https://lazycli.xyz/install.ps1"
+  echo ""
+  echo "If you're using Git Bash or WSL, you can continue with this installer."
+  read -p "Continue with Unix installer anyway? (y/N): " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    exit 0
+  fi
+fi
+
 echo "🛠️ Installing LazyCLI..."
 INSTALL_DIR="$HOME/.lazycli"
 LAZY_BINARY="$INSTALL_DIR/lazy"

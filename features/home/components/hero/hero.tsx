@@ -21,7 +21,14 @@ export default function Hero({
 }) {
   const [copiedCommand, setCopiedCommand] = useState<string>("");
   const [isClient, setIsClient] = useState(false);
-  const installCommand = "curl -s https://lazycli.xyz/install.sh | bash";
+  const [selectedOS, setSelectedOS] = useState<'unix' | 'windows'>('unix');
+  
+  const installCommands = {
+    unix: "curl -s https://lazycli.xyz/install.sh | bash",
+    windows: "iwr -useb https://lazycli.xyz/install.ps1 | iex"
+  };
+  
+  const installCommand = installCommands[selectedOS];
   
   useEffect(() => {
     setIsClient(true);
@@ -165,35 +172,62 @@ export default function Hero({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="bg-slate-800/50 backdrop-blur-xl border border-slate-700 rounded-2xl p-6 max-w-3xl mx-auto mb-12"
+            className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 max-w-3xl mx-auto mb-12"
           >
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-slate-400 text-sm flex items-center">
-                <Download className="w-4 h-4 mr-2" />
-                Quick Install
-              </span>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => copyToClipboard(installCommand)}
-                className="text-cyan-400 hover:text-cyan-300 text-sm flex items-center px-3 py-1 bg-cyan-400/10 rounded-lg border border-cyan-400/20 transition-colors"
-              >
-                {copiedCommand === installCommand ? (
-                  <>
-                    <CheckCircle className="w-4 h-4 mr-1" />
-                    Copied!
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-4 h-4 mr-1" />
-                    Copy
-                  </>
-                )}
-              </motion.button>
+            {/* OS Selector */}
+            <div className="flex items-center justify-center mb-6">
+              <div className="bg-slate-700/50 rounded-lg p-1 flex">
+                <button
+                  onClick={() => setSelectedOS('unix')}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                    selectedOS === 'unix'
+                      ? 'bg-cyan-500 text-white'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Unix/Linux/macOS
+                </button>
+                <button
+                  onClick={() => setSelectedOS('windows')}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                    selectedOS === 'windows'
+                      ? 'bg-cyan-500 text-white'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Windows
+                </button>
+              </div>
             </div>
-            <code className="text-cyan-400 text-lg md:text-xl font-mono block break-all">
-              $ {installCommand}
-            </code>
+            
+            {/* Command Display */}
+            <div className="bg-slate-900/50 rounded-lg p-4 border border-slate-700/30">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-slate-400 text-sm flex items-center">
+                  <Download className="w-4 h-4 mr-2" />
+                  {selectedOS === 'unix' ? 'Bash' : 'PowerShell'}
+                </span>
+                <button
+                  onClick={() => copyToClipboard(installCommand)}
+                  className="text-cyan-400 hover:text-cyan-300 text-sm flex items-center px-3 py-1 bg-cyan-400/10 rounded-md border border-cyan-400/20 transition-colors"
+                >
+                  {copiedCommand === installCommand ? (
+                    <>
+                      <CheckCircle className="w-4 h-4 mr-1" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4 mr-1" />
+                      Copy
+                    </>
+                  )}
+                </button>
+              </div>
+              <code className="text-cyan-400 text-lg font-mono block break-all">
+                $ {installCommand}
+              </code>
+            </div>
           </motion.div>
 
           <motion.div
@@ -232,7 +266,7 @@ export default function Hero({
           >
             {[
               { label: "Commands Available", value: "10+" },
-              { label: "Projects Scaffolded", value: "10K+" },
+              { label: "Projects Scaffolded", value: "50K+" },
               {
                 label: "GitHub Stars",
                 value: (data?.stars || 0).toLocaleString(),
