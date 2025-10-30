@@ -25,7 +25,6 @@ curl -s https://lazycli.xyz/install.sh | bash
 # Custom version installation
 curl -s https://lazycli.xyz/install.sh | bash -s version_name
 ```
-````
 
 > 💡 **Windows users:** Requires WSL or Git Bash — [See installation guide →](https://lazycli.xyz/windows)
 
@@ -38,7 +37,7 @@ curl -s https://lazycli.xyz/install.sh | bash -s version_name
 - **`lazy github init`** - Initialize a new Git repository
 - **`lazy github clone <repo-url>`** - Clone repository with auto-setup
 - **`lazy github push "<message>"`** - Stage, commit, and push changes
-- **`lazy github pull <base-branch> "<title>"`** - Create simple pull request
+- **`lazy github pull <base-branch> "<title>"`** - Create pull request
 - **`lazy github pr <base-branch> "<message>"`** - Full PR workflow (pull, build, commit, push, create PR)
 
 ### 📦 Node.js Development
